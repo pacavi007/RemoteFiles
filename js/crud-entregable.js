@@ -45,6 +45,10 @@ const consultarentregable = async () => {
                             <h6>Tipo Entregable</h6> 
                             <input id="tipoentregable" type="text" class="form-control mb-3" placeholder="Tipo Entregable" rows="2">
                         </div>
+   
+  
+        
+
                         <div class="row">              
                             <div class="col-md-4"> 
                                 <h6>Versión Entregable</h6> 
@@ -164,7 +168,47 @@ const consultarentregable = async () => {
             </div>
         </div>
     </div>
-    `      
+    `     
+    document.getElementById('div-archivo').innerHTML =
+    `
+    <div class="modal fade" id="modal-archivo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Formulario Cargar Entregable</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  </button>
+                </div>
+                <div class="modal-body">
+                        
+                         <div class="row">
+                            <div id="url" type="hidden"> </div>
+                            <div class="col-md-12">
+                                    <input id="fileButton" type="file" class="form-control" onchange="resetprogreso()"/>
+
+                            </div>
+                            <!-- <div class="col-md-1" style="margin-top: 5px; margin-left: -20px">
+                                <div>    
+                                    <button style="background: #0A2269; color: #FFFFFF; border-color: #FFFFFF" onclick="cargararchivo()">
+                                        <i class="bi bi-upload"></i>
+                                    </button>
+                                </div>
+                            </div> -->
+                             
+                        </div> 
+                    <input type="hidden" id="idcarga">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" 
+                            style="background: #0A2269; border-color: #FFFFFF" onclick="cargararchivo()"
+                            >Guardar Entregable
+                    </button>
+                </div>
+            </div>
+        </div>    
+    </div>
+    `
     buscandoentregable()
 } 
 
@@ -187,6 +231,18 @@ const buscandoentregable = async () => {
                        
             <td>
                 <div class="btn-group">
+                    <button class="btn btn-sm rounded-0" type="button" id="carga${item.identregable}"
+                            style="background: #0A2269; border-color: #FFFFFF" onclick="mostrarinfocarga('${item.identregable}')"
+                            data-bs-toggle="modal" data-placement="right" title="Pulsa aquí para asignar un archivo a este entregable"
+                            data-original-title="Archivo" data-bs-target="#modal-archivo" onclick=""
+                            ><i class="bi bi-file-earmark-text" style="background: #0A2269; color: #FFFFFF"></i>
+                    </button>
+                    <button class="btn btn-sm rounded-0" type="button" id="descarga${item.identregable}"
+                            style="background: #0A2269; border-color: #FFFFFF" onclick="iniciardescarga('${item.url}')"
+                            data-placement="right" title="Pulsa aquí para descargar este entregable"
+                            ><i class="bi bi-download"  style="background: #0A2269; color: #FFFFFF"></i>
+                    </button>
+                    
                     <button class="btn btn-info btn-sm rounded-0" type="button" 
                             style="background: #0A2269; border-color: #FFFFFF"
                             data-bs-toggle="modal" data-placement="right" title="Pulsa aquí para conocer toda la información de este entregable" 
@@ -304,7 +360,7 @@ const agregarentregable = async () => {
     var targetDiv = document.getElementById("div-alert");
     targetDiv.innerHTML = 
     `
-    <div class="alert alert-success" id="success-alert" style="display: none">
+    <div class="alert alert-success" id="success-alert" style="display: none; width: 250px">
         <strong>Entregable creado con éxito</strong>
     </div>
     `
@@ -382,7 +438,7 @@ const editarentregable = async (aux) => {
     var targetDiv = document.getElementById("div-alert");
     targetDiv.innerHTML = 
     `
-    <div class="alert alert-success" id="success-alert" style="display: none">
+    <div class="alert alert-success" id="success-alert" style="display: none; width: 270px">
         <strong>Entregable editado con éxito</strong>
     </div>
     `
@@ -421,7 +477,7 @@ const eliminarentregable = async(aux) => {
         var targetDiv = document.getElementById("div-alert");
         targetDiv.innerHTML = 
         `
-        <div class="alert alert-success" id="success-alert" style="display: none">
+        <div class="alert alert-success" id="success-alert" style="display: none; width: 270px">
             <strong>Entregable eliminado con éxito</strong>
         </div>
         `
@@ -818,4 +874,23 @@ const metodoauxiliareditarentregable = async(aux1,inte,proce,proye) => {
         console.log(err)
     }
 }
+
+const mostrarinfocarga = async(idcarga) => {
+    document.getElementById('idcarga').value = idcarga
+    
+}
+
+/*const iniciardescarga = async(link) =>{
+    console.log("en iniciadno descarga",link)
+    //link = "https://firebasestorage.googleapis.com/v0/b/ontoblogp.appspot.com/o/Recursos%2Fcrud-interesado.js?alt=media&token=b866d65b-9024-4c00-8335-37e8db042fe7"
+    if(link.length>0){
+    window.open(link)
+    }
+    else
+    {
+        alert('¡No existe archivo asociado a este entregable!')
+    }
+
+}*/
+    
       
